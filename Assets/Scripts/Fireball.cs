@@ -29,11 +29,7 @@ public class Fireball : MonoBehaviour
         var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            enemyHealth.value -= damage;
-            if (enemyHealth.value <= 0)
-            {
-                Destroy(enemyHealth.gameObject);
-            }
+            enemyHealth.DealDamage(damage);
         }
     }
 
