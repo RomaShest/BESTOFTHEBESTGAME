@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public RectTransform valueRectTransform;
     public GameObject gameplayUI;
     public GameObject gameOverScreen;
-
+    public Animator animator;
     private float _maxValue;
 
     private void Start()
@@ -30,12 +30,21 @@ public class PlayerHealth : MonoBehaviour
     {
         gameplayUI.SetActive(false);
         gameOverScreen.SetActive(true);
+        gameOverScreen.GetComponent<Animator>().SetTrigger("show");
         GetComponent<PlayerController>().enabled = false;
         GetComponent<FireballCaster>().enabled = false;
         GetComponent<CameraRotation>().enabled = false;
+        animator.SetTrigger("death");
     }
     private void DrawHealthBar()
     {
-       valueRectTransform.anchorMax = new Vector2(value / _maxValue, 1);
+        valueRectTransform.anchorMax = new Vector2(value / _maxValue, 1);
+    }
+
+    public void AddHealth(float amount)
+    {
+        value += amount;
+        value = Mathf.Clamp(value, 0, _maxValue);
+        DrawHealthBar();
     }
 }
